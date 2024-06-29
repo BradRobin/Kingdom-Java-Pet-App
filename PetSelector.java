@@ -23,42 +23,52 @@ public class PetSelector extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        petLabel = new JLabel("Select a pet: ", SwingConstants.CENTER);
-        petLabel.setHorizontalTextPosition(JLabel.CENTER);
-        petLabel.setVerticalTextPosition(JLabel.BOTTOM);
-        add(petLabel, BorderLayout.CENTER);
+        JPanel headerPanel = new JPanel();
+        headerPanel.setBackground(new Color(70, 130, 180));
+        JLabel headerLabel = new JLabel("Select Your Favorite Pet");
+        headerLabel.setForeground(Color.WHITE);
+        headerLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        headerPanel.add(headerLabel);
+        add(headerPanel, BorderLayout.NORTH);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(5, 1));
+        // Button panel
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(5, 1, 10, 10));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         ButtonGroup group = new ButtonGroup();
 
         monkeyButton = new JRadioButton("Monkey");
+        styleButton(monkeyButton);
         monkeyButton.addActionListener(this);
         group.add(monkeyButton);
-        panel.add(monkeyButton);
+        buttonPanel.add(monkeyButton);
 
         catButton = new JRadioButton("Cat");
+        styleButton(catButton);
         catButton.addActionListener(this);
         group.add(catButton);
-        panel.add(catButton);
+        buttonPanel.add(catButton);
 
         birdButton = new JRadioButton("Bird");
+        styleButton(birdButton);
         birdButton.addActionListener(this);
         group.add(birdButton);
-        panel.add(birdButton);
+        buttonPanel.add(birdButton);
 
         fishButton = new JRadioButton("Fish");
+        styleButton(fishButton);
         fishButton.addActionListener(this);
         group.add(fishButton);
-        panel.add(fishButton);
+        buttonPanel.add(fishButton);
 
         ratButton = new JRadioButton("Rat");
+        styleButton(ratButton);
         ratButton.addActionListener(this);
         group.add(ratButton);
-        panel.add(ratButton);
+        buttonPanel.add(ratButton);
 
-        add(panel, BorderLayout.WEST);
+        add(buttonPanel, BorderLayout.WEST);
 
         monkeyIcon = new ImageIcon(
                 new ImageIcon("images/monkeyphoto.jpg").getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH));
@@ -73,24 +83,29 @@ public class PetSelector extends JFrame implements ActionListener {
 
     }
 
+    private void styleButton(JRadioButton button) {
+        button.setFont(new Font("Arial", Font.PLAIN, 18));
+        button.setFocusPainted(false);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == monkeyButton) {
-            petLabel.setIcon(monkeyIcon);
-            petLabel.setText("You selected: Monkey");
+            showMessage("Monkey", monkeyIcon);
         } else if (e.getSource() == catButton) {
-            petLabel.setIcon(catIcon);
-            petLabel.setText("You selected: Cat");
+            showMessage("Cat", catIcon);
         } else if (e.getSource() == birdButton) {
-            petLabel.setIcon(birdIcon);
-            petLabel.setText("You selected: Bird");
+            showMessage("Bird", birdIcon);
         } else if (e.getSource() == fishButton) {
-            petLabel.setIcon(fishIcon);
-            petLabel.setText("You selected: Fish");
+            showMessage("Fish", fishIcon);
         } else if (e.getSource() == ratButton) {
-            petLabel.setIcon(ratIcon);
-            petLabel.setText("You selected: Rat");
+            showMessage("Rat", ratIcon);
         }
+    }
+
+    private void showMessage(String petName, ImageIcon petIcon) {
+        JOptionPane.showMessageDialog(this, "You selected: " + petName, "Pet Selected", JOptionPane.INFORMATION_MESSAGE,
+                petIcon);
     }
 
     public static void main(String[] args) {
